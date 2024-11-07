@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 # Directory containing images of known faces
-KNOWN_FACES_DIR = 'known_faces'
+KNOWN_FACES_DIR = 'known_faces/training_data'
 TOLERANCE = 0.6  # Match tolerance
 
 class FaceRecognition:
@@ -13,12 +13,19 @@ class FaceRecognition:
         self.load_known_faces()
 
     def load_known_faces(self):
-        for name in os.listdir(KNOWN_FACES_DIR):
-            for filename in os.listdir(f"{KNOWN_FACES_DIR}/{name}"):
-                image = face_recognition.load_image_file(f"{KNOWN_FACES_DIR}/{name}/{filename}")
-                encoding = face_recognition.face_encodings(image)[0]
-                self.known_faces.append(encoding)
-                self.known_names.append(name)
+        for person_name in os.listdir(KNOWN_FACES_DIR):
+            person_folder = os.path.join(KNOWN_FACES_DIR, person_name)
+            if os.path.isdir(person_folder):
+                # Loop through each image file in the person's folder
+                for filename in os.listdir(person_folder):
+                    image_path = os.path.join(person_folder, filename)
+                    image = face_recognition.load_image_file(image_path)
+                    
+                    # Generate face encodings for the image
+                    encodings = face_recognition.face_encodings(image)
+                    if encodings:  # Proceed if an encoding is found
+                        self.known_faces.append(encodings[0])  # Append the encoding
+                        self.known_names.append(person_name)   # Associate with person's name
 
     def recognize_face(self, frame):
         locations = face_recognition.face_locations(frame)
