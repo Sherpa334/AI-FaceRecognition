@@ -6,6 +6,14 @@ In the interest of public safety and the limitations in human monitoring capabil
 
 AI can visualize data at a speed that humans are not capable of, enabling timely alerts to authorities when unfamiliar or potentially dangerous individuals are detected. This project aims to develop facial recognition software that identifies unfamiliar faces in designated areas, and if so, then notifies the appropriate authorities, thus fostering a safer environment.
 
+**MacOS Installation instruction**
+```console
+brew install cmake
+pip install dlib
+pip install -r requirements.txt
+```
+The steps afterward will follow the same format as other operating systems. 
+
 **Use/Installation**
 After downloading folder to computer you can navigate to it in the terminal, prompt of your choice. If Python is installed on your system enter:
 ```console
