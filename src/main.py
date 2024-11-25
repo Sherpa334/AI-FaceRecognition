@@ -91,8 +91,6 @@ def main():
             print("Restarting...")
             video.release()
             cv2.destroyAllWindows()
-            os.execl(sys.executable, sys.executable, *sys.argv)
-
 
     video.release()
     cv2.destroyAllWindows()
