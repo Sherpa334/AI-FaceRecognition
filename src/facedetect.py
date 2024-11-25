@@ -1,9 +1,11 @@
 import face_recognition
 import os
 import numpy as np
+from pathlib import Path
 
 # Directory containing images of known faces
-KNOWN_FACES_DIR = 'known_faces/training_data'
+ROOT_DIR = Path(__file__).parent.parent
+KNOWN_FACES_DIR = os.path.join(ROOT_DIR, "known_faces", "training_data")
 TOLERANCE = 0.6  # Match tolerance
 
 class FaceRecognition:
