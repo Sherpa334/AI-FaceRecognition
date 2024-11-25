@@ -33,7 +33,7 @@ def main():
         img_count = 0
         
         # get key input
-        key = cv2.waitKey(0)%256
+        key = cv2.waitKey(1)%256
         if key == ord('q'):
             break
 
