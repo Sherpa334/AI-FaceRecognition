@@ -6,7 +6,7 @@ from pathlib import Path
 # Directory containing images of known faces
 ROOT_DIR = Path(__file__).parent.parent
 KNOWN_FACES_DIR = os.path.join(ROOT_DIR, "known_faces", "training_data")
-TOLERANCE = 0.6  # Match tolerance
+TOLERANCE = 0.45  # Match tolerance
 
 class FaceRecognition:
     def __init__(self):
@@ -36,9 +36,13 @@ class FaceRecognition:
         matches = []
         for face_encoding, face_location in zip(encodings, locations):
             results = face_recognition.compare_faces(self.known_faces, face_encoding, TOLERANCE)
-            name = "Unfamiliar"
-            if True in results:
-                name = self.known_names[results.index(True)]
+            distances = face_recognition.face_distance(self.known_faces, face_encoding)
+            if len(results) > 0:
+                best_match_index = np.argmin(distances)  # Find the smallest distance
+                if distances[best_match_index] < TOLERANCE:
+                    name = self.known_names[best_match_index]
+                else:
+                    name = "Unfamiliar"
             matches.append((name, face_location))
 
         return matches
